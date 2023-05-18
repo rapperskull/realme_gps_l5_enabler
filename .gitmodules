@@ -1,0 +1,6 @@
+[submodule "getopt"]
+	path = getopt
+	url = https://github.com/skeeto/getopt.git
+[submodule "libnvbk"]
+	path = libnvbk
+	url = https://github.com/rapperskull/libnvbk.git
