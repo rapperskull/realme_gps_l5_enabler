@@ -4,7 +4,7 @@ Magisk module to enable L5/E5a/B2a GPS bands on realme/OPPO/OnePlus devices with
 
 ## How it works
 
-At each boot, it extracts the `oplusstanvbk` partition, patches it, and changes the `/nv/item_files/gps/cgps/me/gnss_multiband_configuration` property, saving it in the module's directory.
+At each boot, it extracts the `oplusstanvbk` partition, patches it by changing the `/nv/item_files/gps/cgps/me/gnss_multiband_configuration` property, and saves it in the module's directory.
 
 Then, a loop device pointing to the patched file is created and the symlinks under `/dev/block/by-name` and `/dev/block/bootdevice/by-name` are changed to point to the patched block device instead of the original one.
 
