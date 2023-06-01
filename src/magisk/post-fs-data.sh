@@ -6,23 +6,18 @@ PATCHER="${MODDIR}/gnss_patcher"
 MODFILE="${MODDIR}/patched_oplusstanvbk"
 
 SLOT="$(resetprop ro.boot.slot_suffix)"
-PATH1="/dev/block/by-name/oplusstanvbk${SLOT}"
-PATH2="/dev/block/bootdevice/by-name/oplusstanvbk${SLOT}"
+PATH="/dev/block/bootdevice/by-name/oplusstanvbk${SLOT}"
 
 exec > "$LOGFILE"
 exec 2>&1
 
 echo "Slot: ${SLOT}"
 echo
-ls -laZ "$PATH1" "$PATH2"
+ls -laZ "$PATH"
 echo
-if [ -L "$PATH1" ] || [ -L "$PATH2" ]; then
+if [ -L "$PATH" ]; then
   rm -f "$MODFILE"
-  if [ -L "$PATH1" ]; then
-    ORIG="$(readlink -fn "$PATH1")"
-  else
-    ORIG="$(readlink -fn "$PATH2")"
-  fi
+  ORIG="$(readlink -fn "$PATH")"
   DEV="${ORIG}_mod"
   chmod +x "$PATCHER"
   echo "Running patcher"
@@ -39,29 +34,27 @@ if [ -L "$PATH1" ] || [ -L "$PATH2" ]; then
     # loop device, it will fail opening '/dev/block/loo'. Using the same prefix as the original
     # partition will solve the issue, but requires a "hack" to work.
     # We first associate our patched file with the next available loop device, then we rename it.
-    NEXT_LOOP="$(/system/bin/losetup -sf "$MODFILE")"
-    if [ -z "$NEXT_LOOP" ]; then
+    # I'm not sure if it's still needed, since we don't replace '/dev/block/by-name/oplusstanvbk' anymore.
+    LOOP_DEV="$(/system/bin/losetup -sf "$MODFILE")"
+    if [ -z "$LOOP_DEV" ]; then
       echo "ERROR: Cannot create loop device"
     else
-      mv -f "$NEXT_LOOP" "$DEV"
+      mv -f "$LOOP_DEV" "$DEV"
       ret=$?
       if [ $ret -ne 0 ]; then
         echo "ERROR: Cannot rename loop device"
       else
         chcon -v "u:object_r:vendor_custom_ab_block_device:s0" "$DEV" # Set correct SELinux context
-        echo "Created loop device" "$DEV"
+        echo "Created loop device ${DEV}"
         ls -laZ "$DEV"
         echo
-        # Create symlinks to newly created loop device
-        if [ -L "$PATH1" ]; then
-          ln -sfv "$DEV" "$PATH1"
-        fi
-        if [ -L "$PATH2" ]; then
-          ln -sfv "$DEV" "$PATH2"
-        fi
+        # Create symlink to newly created loop device
+        ln -sfv "$DEV" "$PATH"
         echo
-        ls -laZ "$PATH1" "$PATH2"
+        ls -laZ "$PATH"
       fi
     fi
   fi
+else
+  echo "ERROR: ${PATH} doesn't exist!!!"
 fi
