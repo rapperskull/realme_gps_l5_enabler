@@ -4,12 +4,14 @@ Magisk module to enable L5/E5a/B2a GPS bands on realme/OPPO/OnePlus devices with
 
 ## Changelog
 
-### v0.0.2
+### v0.0.3
+- Fix OTA updates with module enabled
+- Show module version in log
 
+### v0.0.2
 - Attempt to fix triple-reboot issue
 
 ### v0.0.1
-
 - First release
 
 ## How it works

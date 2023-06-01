@@ -11,6 +11,8 @@ PATH="/dev/block/bootdevice/by-name/oplusstanvbk${SLOT}"
 exec > "$LOGFILE"
 exec 2>&1
 
+echo "@PROJECT_NAME@ v@PROJECT_VERSION@ by @MAGISK_AUTHOR@"
+echo
 echo "Slot: ${SLOT}"
 echo
 ls -laZ "$PATH"

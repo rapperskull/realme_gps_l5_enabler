@@ -2,6 +2,6 @@ id=@PROJECT_NAME@
 name=@MAGISK_LONG_NAME@
 version=@PROJECT_VERSION@
 versionCode=@MAGISK_VERSION_CODE@
-author=Rapper_skull
+author=@MAGISK_AUTHOR@
 description=@PROJECT_DESCRIPTION@
 updateJson=@MAGISK_UPDATE_JSON@
