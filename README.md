@@ -2,6 +2,16 @@
 
 Magisk module to enable L5/E5a/B2a GPS bands on realme/OPPO/OnePlus devices with Qualcomm Snapdragon processors. It has been tested only on realme GT 2 Pro (RMX3301), but it should work on other devices too if there's hardware support.
 
+## Changelog
+
+### v0.0.2
+
+- Attempt to fix triple-reboot issue
+
+### v0.0.1
+
+- First release
+
 ## How it works
 
 At each boot, it extracts the `oplusstanvbk` partition, patches it by changing the `/nv/item_files/gps/cgps/me/gnss_multiband_configuration` property, and saves it in the module's directory.

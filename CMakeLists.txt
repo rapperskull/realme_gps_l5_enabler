@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.12)
 project(RealmeGPSL5Enabler
-    VERSION "0.0.1"
+    VERSION "0.0.2"
     DESCRIPTION "Enable L5/E5a/B2a GPS bands on realme devices."
     HOMEPAGE_URL "https://github.com/rapperskull/realme_gps_l5_enabler/"
     LANGUAGES C
@@ -26,7 +26,7 @@ target_link_libraries(gnss_patcher nvbk)
 
 if(ANDROID)
     set(MAGISK_LONG_NAME "realme GPS L5 Enabler")
-    set(MAGISK_VERSION_CODE 1)
+    set(MAGISK_VERSION_CODE 2)
     set(MAGISK_UPDATE_JSON "https://raw.githubusercontent.com/rapperskull/realme_gps_l5_enabler/master/update.json")
 
     set(MAGISK_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src/magisk/)
